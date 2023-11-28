@@ -390,9 +390,22 @@ svg path{
   border-radius: 7px;
   background-color: #162231;
   min-height: 128px;
-  overflow:hidden
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 }
 
+.taskRow::-webkit-scrollbar {
+  width: 12px;
+}
+
+.taskRow::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.taskRow::-webkit-scrollbar-track {
+  background-color: transparent;
+}
 .taskApp{
   display: flex;
   flex-direction: row;
