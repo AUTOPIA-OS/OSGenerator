@@ -251,7 +251,7 @@ function App() {
           {tasksList.map((app, index) => (
             <div className='taskRow' key={index}>
               <div className='taskAppID'>
-                <h2>App ID: {index}</h2>
+                <h2>Core ID: {index}</h2>
               </div>
               {/* Sort app by priority */}
 
