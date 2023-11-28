@@ -68,7 +68,7 @@ function App() {
       <div className='content'> 
 
 
-      {pressed == 0 && labelList.map((label, index) => (
+      {pressed === 0 && labelList.map((label, index) => (
         <div className="form__group field" key={index}>
           { [0, 1, 2, 3,7, 8].includes(index) && 
           <input
@@ -170,64 +170,93 @@ function App() {
         </div>
       ))}
 
-    {pressed == 0 && <div className="newbutton">
-        <button id="btn" onClick={() => {
-          console.log("button clicked");
-          const btn = document.querySelector("#btn");
-          const btnText = document.querySelector("#btnText");
+      {pressed ===
+      0 && <div className="newbutton">
+          <button id="btn" onClick={() => {
+            console.log("button clicked");
+            const btn = document.querySelector("#btn");
+            const btnText = document.querySelector("#btnText");
 
-          let task = {
-            osAppId: appID,
-            TaskID: taskID,
-            priority: priority,
-            handleName: handleName,
-            TaskState: taskState,
-            SCHEDULE: schedule,
-            VERSION: version,
-            activationMax: maxActivation,
-            resourcesUsed: resourcesUsed
-          };
+            let task = {
+              osAppId: appID,
+              TaskID: taskID,
+              priority: priority,
+              handleName: handleName,
+              TaskState: taskState,
+              SCHEDULE: schedule,
+              VERSION: version,
+              activationMax: maxActivation,
+              resourcesUsed: resourcesUsed
+            };
 
-          tasksList.push(task);
-          
-          setAppID(-1);
-          setTaskID(-1);
-          setPriority(-1);
-          setHandleName("");
-          setTaskState("");
-          setSchedule("");
-          setVersion("");
-          setMaxActivation(-1);
-          setResourcesUsed([]);
-          console.log(tasksList);
+            tasksList.push(task);
+            
+            setAppID(-1);
+            setTaskID(-1);
+            setPriority(-1);
+            setHandleName("");
+            setTaskState("");
+            setSchedule("");
+            setVersion("");
+            setMaxActivation(-1);
+            setResourcesUsed([]);
+            console.log(tasksList);
 
-          // remove the value from the input fields
-          
-          for (let i = 0; i < variables.length; i++) {
-            document.querySelectorAll(".form__field")[i].value = "";
+            // remove the value from the input fields
+            
+            for (let i = 0; i < variables.length; i++) {
+              document.querySelectorAll(".form__field")[i].value = "";
+            }
+
+            
+
+
+            btnText.innerHTML = "Task Added!";
+            btn.classList.add("active");
+            setTimeout(function () {
+              btn.classList.remove("active");
+              btnText.innerHTML = "Add";
+            }, 3000);
           }
+          }>
+              <p id="btnText">Add</p>
+              <div class="check-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                      <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                  </svg>
+              </div>
+          </button>
+      </div>
+      }
 
-          
+      </div>
+
+      <div className='content'>
+        {/* This div will have a list with all the tasks  */}
+
+        <div className='taskList'>
+          <h1>Task List</h1>
+          <ul>
+            {tasksList.map((task, index) => (
+              <div className='containerbox' key={index}>
+                {/* make the text white */}
+                <li style={{   color: '#fff' }}key={index}>
+                  <div className='task'>
+                    <h2>Task {index}</h2>
+                    <p>Name: {task.handleName}</p>
+                    <p>ID: {task.TaskID}</p>
+                    <p>Priority: {task.priority}</p>
+                    
+                  </div>
+                </li>
+
+              </div>
+            ))}
+          </ul>
+        </div>
 
 
-          btnText.innerHTML = "Task Added!";
-          btn.classList.add("active");
-          setTimeout(function () {
-            btn.classList.remove("active");
-            btnText.innerHTML = "Add";
-          }, 3000);
-        }
-        }>
-            <p id="btnText">Add</p>
-            <div class="check-box">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-                    <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                </svg>
-            </div>
-        </button>
-    </div>
-    }
-
+        
       </div>
   
     </div>

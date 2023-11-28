@@ -159,7 +159,7 @@ body {
   align-items: center;
   min-height: 100vh;
   font-size: 1.5rem;
-  background-color:#222222;
+  background-color:#EDF2F9;
 }
 
 #root{
@@ -184,7 +184,7 @@ body {
   flex: 0;
   padding-left: 10px;
   padding-right: 20px;
-  background-color: #2e2a2a;
+  background-color: #EDF2F9;
 }
 
 .content{
@@ -193,6 +193,11 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin: 50px;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+  border-radius: 7px;
+  height: fit-content;
 }
 
 
@@ -258,24 +263,23 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-.newbutton{
-
-}
-
 button{
-  width: 270px;
-  height: 80px;
+  width: 180px;
+  height: 50px;
   border: none;
   outline: none;
-  background: #2f2f2f;
-  color: #fff;
+  background: #fff;
+  color: #5E6E82;
   font-size: 22px;
-  border-radius: 40px;
+  border-radius: 7px;
   text-align: center;
   box-shadow: 0 6px 20px -5px rgba(0,0,0,0.4);
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  border: #dee1e7 2px solid;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .check-box{
@@ -322,4 +326,26 @@ svg path{
   stroke-dashoffset: 0;
   transition: 1s;
   transition-delay: 1s;
+}
+
+
+
+.containerbox{
+  padding: 20px;
+  margin: 20px auto;
+  margin-top:20px;
+  border-radius:15px;
+  width: 80%;
+  box-shadow: 1px 2px 10px 0px rgba(0,0,0,0.3);
+  background: rgb(53, 198, 195); /* Old browsers */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9bc635', endColorstr='#c0ea67',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+
+.newbutton{
+  background-color: #F9FAFD;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
