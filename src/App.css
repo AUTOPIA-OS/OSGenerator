@@ -159,7 +159,7 @@ body {
   align-items: center;
   min-height: 100vh;
   font-size: 1.5rem;
-  background-color:#EDF2F9;
+  background-color:#0B1727;
 }
 
 #root{
@@ -184,20 +184,21 @@ body {
   flex: 0;
   padding-left: 10px;
   padding-right: 20px;
-  background-color: #EDF2F9;
+  background-color: #0B1727;
 }
 
 .content{
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   display: flex;
   flex-direction: column;
   margin: 50px;
-  background-color: #FFFFFF;
+  background-color: #121E2D;
   box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
   border-radius: 7px;
   height: fit-content;
+  min-height: 950px;
 }
 
 
@@ -264,22 +265,21 @@ body {
 }
 
 button{
-  width: 180px;
-  height: 50px;
+  width: 250px;
+  height: 80px;
   border: none;
   outline: none;
-  background: #fff;
+  background: #0B1727;
   color: #5E6E82;
   font-size: 22px;
-  border-radius: 7px;
+  border-radius: 40px;
   text-align: center;
   box-shadow: 0 6px 20px -5px rgba(0,0,0,0.4);
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  border: #dee1e7 2px solid;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  border: #0B1727 2px solid;
+  padding: 5px;
 }
 
 .check-box{
@@ -307,7 +307,7 @@ svg path{
 }
 
 .active{
-  background: #ff2b75;
+  background: #0a9935;
   transition: 1s;
 }
 
@@ -343,9 +343,24 @@ svg path{
 
 
 .newbutton{
-  background-color: #F9FAFD;
+  background-color: #162231;
   width: 100%;
   justify-content: center;
   align-items: center;
   display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 7px;
+}
+
+.title{
+  color: #D8E2EF;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 20px;
+  background-color: #162231;
+  width: 100%;
+  border-radius: 7px;
 }

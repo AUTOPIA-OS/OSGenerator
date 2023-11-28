@@ -5,7 +5,7 @@ import { useState } from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 let labelList = [
-  "App ID",       
+  "Core ID",       
   "Task ID",        
   "Priority",      
   "Handle Name",    
@@ -66,6 +66,10 @@ function App() {
 
 
       <div className='content'> 
+
+      <div className='title'>
+        <h1>Task Attributes</h1>
+      </div>
 
 
       {pressed === 0 && labelList.map((label, index) => (
@@ -222,7 +226,7 @@ function App() {
               <p id="btnText">Add</p>
               <div class="check-box">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-                      <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                      <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8" />        
                   </svg>
               </div>
           </button>
@@ -234,8 +238,12 @@ function App() {
       <div className='content'>
         {/* This div will have a list with all the tasks  */}
 
+        <div className='title'>
+          <h1>Tasks List</h1>
+        </div>
+
         <div className='taskList'>
-          <h1>Task List</h1>
+          
           <ul>
             {tasksList.map((task, index) => (
               <div className='containerbox' key={index}>
