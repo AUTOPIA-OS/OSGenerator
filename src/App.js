@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import { useState } from 'react';
@@ -17,7 +17,6 @@ let labelList = [
 ]
 
 // create a list of the given labels
-let tasksList = [[], [], [], [], [], []];
 
 
 
@@ -35,6 +34,8 @@ function App() {
   const [maxActivation, setMaxActivation] = useState(-1);
   const [resourcesUsed, setResourcesUsed] = useState([]);
   const [pressed, setPressed] = useState(0);
+  const  [tasksList, setTasksList] = useState([[], [], [], [], [], []]);
+
 
   let variables = [appID, taskID, priority, handleName, taskState, schedule, version, maxActivation, resourcesUsed];
   let options = [[], [], [], [], ["SUSPENDED", "READY", "RUNNING", "WAITING"], ["FULL", "NON"], ["BASIC", "EXTENDED" ], [], []]
@@ -44,21 +45,33 @@ function App() {
   return (
     // <div className="container mt-5">
     <div className='container'>
+
+      <div className='header'>
+        <div className='image'>
+          <img src="autopia.png" alt="autopia" className="logo" ></img>
+        </div>
+        <div className='image'>
+          <img src="github.svg" alt="autopia" className="github" ></img>
+        </div>
+      </div>
       
+
+      <div className='bodycontainer'>
+
       <div className='sidebar'> 
-            <button class="button-50" role="button" onClick={()=>{
+            <button className="button-50" role="button" onClick={()=>{
               setPressed(0);
             }}>Task</button>
-            <button class="button-50" role="button"onClick={()=>{
+            <button className="button-50" role="button"onClick={()=>{
               setPressed(1);
             }}>Interrupt</button>
-            <button class="button-50" role="button"onClick={()=>{
+            <button className="button-50" role="button"onClick={()=>{
               setPressed(2);
             }}>Counter</button>
-            <button class="button-50" role="button"onClick={()=>{
+            <button className="button-50" role="button"onClick={()=>{
               setPressed(3);
             }}>Alarm</button>
-            <button class="button-50" role="button"onClick={()=>{
+            <button className="button-50" role="button"onClick={()=>{
               setPressed(4);
             }}>Resource</button>
 
@@ -69,9 +82,11 @@ function App() {
 
       <div className='content'> 
 
+      {pressed === 0 &&
       <div className='title'>
         <h1>Task Attributes</h1>
       </div>
+      }
 
 
       {pressed === 0 && labelList.map((label, index) => (
@@ -183,6 +198,112 @@ function App() {
             const btn = document.querySelector("#btn");
             const btnText = document.querySelector("#btnText");
 
+            // check if all the fields are filled
+            for (let i = 0; i < variables.length; i++) {
+              if (variables[i] === -1 || variables[i] === "") {
+                btnText.innerHTML = "Fill all the fields!";
+                let old = btnText.style.color;
+                btnText.style.color = "black";
+                btn.classList.add("reject");
+                setTimeout(function () {
+                  btn.classList.remove("reject");
+                  btnText.innerHTML = "Add";
+                  btnText.style.color = old;
+                }, 3000);
+                return;
+              }
+            }
+
+            {
+              // check that coreid, taskid, priority, and max activation are integers
+              if (!Number.isInteger(parseInt(appID)) ) {
+                btnText.innerHTML = "Core ID must be an integer!";
+                let old = btnText.style.color;
+                btnText.style.color = "black";
+                btn.classList.add("reject");
+                setTimeout(function () {
+                  btn.classList.remove("reject");
+                  btnText.innerHTML = "Add";
+                  btnText.style.color = old;
+                }, 3000);
+                return;
+              }
+
+              if (!Number.isInteger(parseInt(taskID)) ) {
+                btnText.innerHTML = "Task ID must be an integer!";
+                let old = btnText.style.color;
+                btnText.style.color = "black";
+                btn.classList.add("reject");
+                setTimeout(function () {
+                  btn.classList.remove("reject");
+                  btnText.innerHTML = "Add";
+                  btnText.style.color = old;
+                }, 3000);
+                return;
+              }
+
+              if (!Number.isInteger(parseInt(priority)) ) {
+                btnText.innerHTML = "Priority must be an integer!";
+                let old = btnText.style.color;
+                btnText.style.color = "black";
+                btn.classList.add("reject");
+                setTimeout(function () {
+                  btn.classList.remove("reject");
+                  btnText.innerHTML = "Add";
+                  btnText.style.color = old;
+                }, 3000);
+                return;
+              }
+
+              if (!Number.isInteger(parseInt(maxActivation)) ) {
+                btnText.innerHTML = "Max Activation must be an integer!";
+                let old = btnText.style.color;
+                btnText.style.color = "black";
+                btn.classList.add("reject");
+                setTimeout(function () {
+                  btn.classList.remove("reject");
+                  btnText.innerHTML = "Add";
+                  btnText.style.color = old;
+                }, 3000);
+                return;
+              }
+
+            }
+
+            // check if the task id is unique
+            for (let i = 0; i < tasksList.length; i++) {
+              for (let j = 0; j < tasksList[i].length; j++) {
+                if (tasksList[i][j].TaskID === taskID) {
+                  btnText.innerHTML = "Task ID already exists!";
+                  let old = btnText.style.color;
+                  btnText.style.color = "black";
+                  btn.classList.add("reject");
+                  setTimeout(function () {
+                    btn.classList.remove("reject");
+                    btnText.innerHTML = "Add";
+                    btnText.style.color = old;
+                  }, 3000);
+                  return;
+                }
+              }
+            }
+
+            // check that app id is between 0 and 5
+            if (appID < 0 || appID > 5) {
+              btnText.innerHTML = "App ID must be between 0 and 5!";
+              let old = btnText.style.color;
+              btnText.style.color = "black";
+              btn.classList.add("reject");
+              setTimeout(function () {
+                btn.classList.remove("reject");
+                btnText.innerHTML = "Add";
+                btnText.style.color = old;
+              }, 3000);
+              return;
+            }
+
+
+
             let task = {
               osAppId: appID,
               TaskID: taskID,
@@ -195,7 +316,9 @@ function App() {
               resourcesUsed: resourcesUsed
             };
 
-            tasksList[appID].push(task);
+            let temp = tasksList;
+            temp[appID].push(task);
+            setTasksList(temp);
             
             setAppID(-1);
             setTaskID(-1);
@@ -226,7 +349,7 @@ function App() {
           }
           }>
               <p id="btnText">Add</p>
-              <div class="check-box">
+              <div className="check-box">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
                       <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8" />        
                   </svg>
@@ -234,6 +357,15 @@ function App() {
           </button>
       </div>
       }
+
+
+      {pressed === 1 &&
+      <div className='title'>
+        <h1>Interrupt Attributes</h1>
+        </div>
+      }
+
+
 
       </div>
 
@@ -255,8 +387,21 @@ function App() {
               </div>
               {/* Sort app by priority */}
 
-              {app.sort((a, b) => (a.priority > b.priority) ? 1 : -1).map((task, index) => (
-                  <div className='containerbox' key={index}>
+              {app.sort((a, b) => (a.priority > b.priority) ? 1 : -1).map((task, i) => (
+                  <div className='containerbox' key={i} onContextMenu={(e) => {
+                    e.preventDefault();
+
+                    let taskID = e.currentTarget.childNodes[0].childNodes[0].innerHTML.split(" ")[1];
+                    const updatedTasksList = tasksList.map((taskArr, idx) => {
+                      if (idx === index) {
+                        return taskArr.filter((t) => t.TaskID !== taskID);
+                      }
+                      return taskArr;
+                    });
+            
+                    // Update the state with the new array
+                    setTasksList(updatedTasksList);
+                  }}>
                     {/* make the text white */}
                       <div className='task'>
                         <p>ID: {task.TaskID}</p>
@@ -277,6 +422,10 @@ function App() {
 
         
       </div>
+
+      </div>
+
+
   
     </div>
       
