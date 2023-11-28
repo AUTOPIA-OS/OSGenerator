@@ -17,7 +17,9 @@ let labelList = [
 ]
 
 // create a list of the given labels
-let tasksList = [];
+let tasksList = [[], [], [], [], [], []];
+
+
 
 
 
@@ -193,7 +195,7 @@ function App() {
               resourcesUsed: resourcesUsed
             };
 
-            tasksList.push(task);
+            tasksList[appID].push(task);
             
             setAppID(-1);
             setTaskID(-1);
@@ -244,23 +246,32 @@ function App() {
 
         <div className='taskList'>
           
-          <ul>
-            {tasksList.map((task, index) => (
-              <div className='containerbox' key={index}>
-                {/* make the text white */}
-                <li style={{   color: '#fff' }}key={index}>
-                  <div className='task'>
-                    <h2>Task {index}</h2>
-                    <p>Name: {task.handleName}</p>
-                    <p>ID: {task.TaskID}</p>
-                    <p>Priority: {task.priority}</p>
-                    
-                  </div>
-                </li>
+         {/* Put tasks with different appids in separate rows */}
 
+          {tasksList.map((app, index) => (
+            <div className='taskRow' key={index}>
+              <div className='taskAppID'>
+                <h2>App ID: {index}</h2>
               </div>
-            ))}
-          </ul>
+              {/* Sort app by priority */}
+
+              {app.sort((a, b) => (a.priority > b.priority) ? 1 : -1).map((task, index) => (
+                  <div className='containerbox' key={index}>
+                    {/* make the text white */}
+                      <div className='task'>
+                        <p>ID: {task.TaskID}</p>
+                        <p>Name: {task.handleName}</p>
+                        <p>Priority: {task.priority}</p>
+                        
+                      </div>
+    
+                  </div>
+                    ))}
+
+              
+            </div>
+          ))}
+
         </div>
 
 

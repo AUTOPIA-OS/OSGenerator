@@ -331,14 +331,18 @@ svg path{
 
 
 .containerbox{
-  padding: 20px;
-  margin: 20px auto;
-  margin-top:20px;
+  padding: 10px;
+  margin: 5px ;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #D8E2EF;
+  font-size: 18px;
   border-radius:15px;
-  width: 80%;
   box-shadow: 1px 2px 10px 0px rgba(0,0,0,0.3);
   background: rgb(53, 198, 195); /* Old browsers */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9bc635', endColorstr='#c0ea67',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -363,4 +367,45 @@ svg path{
   background-color: #162231;
   width: 100%;
   border-radius: 7px;
+}
+
+.taskList{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.taskRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #162231;
+  min-height: 128px;
+  overflow:hidden
+}
+
+.taskApp{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #162231;
+}
+
+.taskAppID{
+  margin-right: 20px;
+  color: #D8E2EF;
 }
