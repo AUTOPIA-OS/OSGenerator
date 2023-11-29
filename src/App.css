@@ -170,19 +170,24 @@ body {
 }
 
 
-.container{
-  display: flex;
-  flex-direction: column;
-  background-color: #0B1727;
-  width:  100% ;
-  height: 100vh;
-}
-
+.container {
+    display: flex;
+    flex-direction: column;
+    /*background-color: #0B1727;*/
+    background-image: url('../public/background2.jpg'); /* Add the path to your image here */
+    /* darken the image */
+    background-size: cover; /* Adjust as needed */
+    background-position: center; /* Adjust as needed */
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+  }
 .bodycontainer{
   display: flex;
   flex-direction: row;
   width:  100% ;
   height: 100vh;
+  opacity: 0.95;
 }
 .sidebar{
   display: flex;
@@ -192,7 +197,6 @@ body {
   flex: 0;
   padding-left: 10px;
   padding-right: 20px;
-  background-color: #0B1727;
 }
 
 .content{
@@ -208,6 +212,7 @@ body {
   height: fit-content;
   min-height: 950px;
   justify-content: space-between;
+  opacity: 0.95;
 }
 
 
@@ -299,7 +304,7 @@ button{
   position: absolute;
   top: 0;
   right: -40px;
-  opacity: 0;
+
 }
 
 .check-box svg{
@@ -640,6 +645,7 @@ svg path{
   font-weight: Bold;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
+  opacity: 0.8;
 }
 
 .button-int:hover {
