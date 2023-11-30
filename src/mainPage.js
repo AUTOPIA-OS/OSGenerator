@@ -424,17 +424,21 @@ function MainPage() {
             }
 
 
+            let resources = resourcesUsed.split(",");
+            for (let i = 0; i < resources.length; i++) {
+              resources[i] = parseInt(resources[i]);
+            }
 
             let task = {
-              osAppId: appID,
-              TaskID: taskID,
-              priority: priority,
+              osAppId: parseInt(appID),
+              TaskID: parseInt(taskID),
+              priority: parseInt(priority),
               handleName: handleName,
               TaskState: taskState,
               SCHEDULE: schedule,
               VERSION: version,
-              activationMax: maxActivation,
-              resourcesUsed: resourcesUsed
+              activationMax: parseInt(maxActivation),
+              resourcesUsed: resources
             };
 
             let temp = tasksList;
@@ -618,6 +622,7 @@ function MainPage() {
             }}
             required
           >
+            <option style={{   backgroundColor: '#282c34' }} value="">Select an option</option>
             {optionsCat2[index].map((option, index) => (
               <option style={{   backgroundColor: '#282c34' }}value={option} key={index}>
                 {option}
@@ -747,17 +752,21 @@ function MainPage() {
 
 
             let ISR = {
-              osAppId: appID,
-              priority: priority,
+              osAppId: parseInt(appID),
+              priority: parseInt(priority),
               Interrupt_Handler: handleName,
-              isr_cat: isrCat === "CAT1" ? 1 : 2
+              isr_cat: isrCat === "CAT1" ? parseInt(1) : parseInt(2)
             };
 
             if (isrCat === "CAT2") {
               ISR.SCHEDULE = schedule;
               ISR.VERSION = version;
-              ISR.activationMax = maxActivation;
-              ISR.resourcesUsed = resourcesUsed;
+              ISR.activationMax = parseInt(maxActivation);
+              let resources = resourcesUsed.split(",");
+              for (let i = 0; i < resources.length; i++) {
+                resources[i] = parseInt(resources[i]);
+              }
+              ISR.resourcesUsed = resources;
             }
 
             let temp = interruptsList;
@@ -987,9 +996,9 @@ function MainPage() {
 
 
             let Counter = {
-              osAppId: appID,
-              counter_id: counterID,
-              maxAllowedValue: maxValue,
+              osAppId: parseInt(appID),
+              counter_id: parseInt(counterID),
+              maxAllowedValue: parseInt(maxValue),
               version: counterVersion,
               Alarms: []
             };
@@ -1360,19 +1369,19 @@ function MainPage() {
 
 
             let Alarm = {
-              AlarmID: alarmID,
+              AlarmID: parseInt(alarmID),
               AlarmBase: {
-                maxAllowedValue: maxValue,
-                ticksPerBase: ticksPerBase,
-                minCycle: minimumCycle
+                maxAllowedValue: parseInt(maxValue),
+                ticksPerBase: parseInt(ticksPerBase),
+                minCycle: parseInt(minimumCycle)
               },
-              Start: start,
-              Cycle: cycle,
+              Start: parseInt(start),
+              Cycle: parseInt(cycle),
               Action: alarmAction,
-              TaskID: taskID,
-              EventMask: eventMask,
-              Autostart: autostart,
-              AppModeType: 0,
+              TaskID: parseInt(taskID),
+              EventMask: parseInt(eventMask),
+              Autostart: parseInt(autostart),
+              AppModeType: parseInt(0),
               Callback: "NULL"
             };
 
@@ -1561,7 +1570,7 @@ function MainPage() {
             
 
             let Resource = {
-              resource_id: resourceID,
+              resource_id: parseInt(resourceID),
               resource_property: resourceProperty,
             };
 
