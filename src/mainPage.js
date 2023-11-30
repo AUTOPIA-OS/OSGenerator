@@ -61,17 +61,17 @@ function MainPage() {
   const [taskID, setTaskID] = useState(-1);
   const [priority, setPriority] = useState(-1);
   const [handleName, setHandleName] = useState("");
-  const [taskState, setTaskState] = useState("SUSPENDED");
-  const [schedule, setSchedule] = useState("FULL");
-  const [version, setVersion] = useState("BASIC");
+  const [taskState, setTaskState] = useState("");
+  const [schedule, setSchedule] = useState("");
+  const [version, setVersion] = useState("");
   const [maxActivation, setMaxActivation] = useState(-1);
   const [resourcesUsed, setResourcesUsed] = useState([]);
   const [pressed, setPressed] = useState(0);
   const  [tasksList, setTasksList] = useState([[], [], [], [], [], []]);
-  const [isrCat, setIsrCat] = useState("CAT1");
+  const [isrCat, setIsrCat] = useState("");
   const [counterID, setCounterID] = useState(-1);
   const [maxValue, setMaxValue] = useState(-1);
-  const [counterVersion, setCounterVersion] = useState("Software");
+  const [counterVersion, setCounterVersion] = useState("");
   const [interruptsList, setInterruptsList] = useState([[], [], [], [], [], []]);
   const [countersList, setCountersList] = useState([[], [], [], [], [], []]);
   const [alarmID, setAlarmID] = useState(-1);
@@ -79,7 +79,7 @@ function MainPage() {
   const [minimumCycle, setMinimumCycle] = useState(-1);
   const [start, setStart] = useState(-1);
   const [cycle, setCycle] = useState(-1);
-  const [alarmAction, setAlarmAction] = useState("ACTION_ACTIVATETASK");
+  const [alarmAction, setAlarmAction] = useState("");
   const [eventMask, setEventMask] = useState(-1);
   const [autostart, setAutostart] = useState(-1);
   const [alarmsList, setAlarmsList] = useState([[], [], [], [], [], []]);
@@ -143,6 +143,54 @@ function MainPage() {
             <button className="button-int" role="button"onClick={()=>{
               setPressed(4);
             }}>Resource</button>
+              <button className="button-int2" role="button"onClick={()=>{
+
+                let tasks = [];
+                let interrupts = [];
+                let counters = [];
+                let resources = [];
+
+                for (let i = 0; i < tasksList.length; i++) {
+                  for (let j = 0; j < tasksList[i].length; j++) {
+                    tasks.push(tasksList[i][j]);
+                  }
+                }
+
+                for (let i = 0; i < interruptsList.length; i++) {
+                  for (let j = 0; j < interruptsList[i].length; j++) {
+                    interrupts.push(interruptsList[i][j]);
+                  }
+                }
+
+                for (let i = 0; i < countersList.length; i++) {
+                  for (let j = 0; j < countersList[i].length; j++) {
+                    counters.push(countersList[i][j]);
+                  }
+                }
+
+                for (let i = 0; i < resourcesList.length; i++) {
+                  resources.push(resourcesList[i]);
+                }
+
+                let data = {
+                  tasks: tasks,
+                  isrs: interrupts,
+                  resources: resources,
+                  counters: counters
+                };
+
+                console.log(data);
+                // download a json file with the data
+                const element = document.createElement("a");
+                const file = new Blob([JSON.stringify(data, null, 2)], {type: 'text/plain'});
+                element.href = URL.createObjectURL(file);
+                element.download = "data.json";
+                document.body.appendChild(element); // Required for this to work in FireFox
+                element.click();
+
+
+              
+            }}>Download</button>
 
       </div>
 
@@ -248,6 +296,8 @@ function MainPage() {
             }}
             required
           >
+            <option style={{   backgroundColor: '#282c34' }} value="">Select an option</option>
+
             {options[index].map((option, index) => (
               <option style={{   backgroundColor: '#282c34' }}value={option} key={index}>
                 {option}
@@ -496,6 +546,7 @@ function MainPage() {
             }}
             required
           >
+            <option style={{   backgroundColor: '#282c34' }} value="">Select an option</option>
             {optionsInterrupt[index].map((option, index) => (
               <option style={{   backgroundColor: '#282c34' }}value={option} key={index}>
                 {option}
@@ -822,6 +873,7 @@ function MainPage() {
             }}
             required
           >
+            <option style={{   backgroundColor: '#282c34' }} value="">Select an option</option>
             {optionsCounter[index].map((option, index) => (
               <option style={{   backgroundColor: '#282c34' }}value={option} key={index}>
                 {option}
@@ -932,7 +984,6 @@ function MainPage() {
               }, 3000);
               return;
             }
-
 
 
             let Counter = {
@@ -1085,6 +1136,7 @@ function MainPage() {
             }}
             required
           >
+            <option style={{   backgroundColor: '#282c34' }} value="">Select an option</option>
             {optionsAlarm[index].map((option, index) => (
               <option style={{   backgroundColor: '#282c34' }}value={option} key={index}>
                 {option}
@@ -1439,6 +1491,7 @@ function MainPage() {
             }}
             required
           >
+            <option style={{   backgroundColor: '#282c34' }} value="">Select an option</option>
             {optionsResource[index].map((option, index) => (
               <option style={{   backgroundColor: '#282c34' }}value={option} key={index}>
                 {option}
@@ -1476,7 +1529,6 @@ function MainPage() {
             }
 
             
-            // check that coreid, taskid, priority, and max activation are integers
             if (!Number.isInteger(parseInt(resourceID)) ) {
               btnText.innerHTML = "Core ID must be an integer!";
               let old = btnText.style.color;
@@ -1491,10 +1543,9 @@ function MainPage() {
             }
 
 
-            // check if the counterID is unique
+            // check if the resource is unique
             for (let i = 0; i < resourcesList.length; i++) {
-              for (let j = 0; j < resourcesList[i].length; j++) {
-                if (resourcesList[i][j].resource_id === resourceID) {
+                if (resourcesList[i].resource_id === resourceID) {
                   btnText.innerHTML = "Resource ID already exists!";
                   let old = btnText.style.color;
                   btnText.style.color = "black";
@@ -1506,7 +1557,6 @@ function MainPage() {
                   }, 3000);
                   return;
                 }
-              }
             }
             
 
@@ -1570,7 +1620,7 @@ function MainPage() {
               </div>
               {/* Sort app by priority */}
 
-              {app.sort((a, b) => (a.priority > b.priority) ? 1 : -1).map((task, i) => (
+              {app.sort((a, b) => (parseInt(a.priority) > parseInt(b.priority)) ? 1 : -1).map((task, i) => (
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
@@ -1630,7 +1680,7 @@ function MainPage() {
               </div>
               {/* Sort app by priority */}
 
-              {app.sort((a, b) => (a.priority > b.priority) ? 1 : -1).map((task, i) => (
+              {app.sort((a, b) => (parseInt(a.priority) > parseInt(b.priority)) ? 1 : -1).map((task, i) => (
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
@@ -1688,7 +1738,7 @@ function MainPage() {
               </div>
               {/* Sort app by priority */}
 
-              {app.sort((a, b) => (a.priority > b.priority) ? 1 : -1).map((task, i) => (
+              {app.sort((a, b) => (parseInt(a.priority) > parseInt(b.priority)) ? 1 : -1).map((task, i) => (
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
@@ -1744,7 +1794,7 @@ function MainPage() {
               </div>
               {/* Sort app by priority */}
 
-              {app.sort((a, b) => (a.CounterID > b.CounterID) ? 1 : -1).map((task, i) => (
+              {app.sort((a, b) => (parseInt(a.CounterID) > parseInt(b.CounterID)) ? 1 : -1).map((task, i) => (
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
@@ -1786,29 +1836,28 @@ function MainPage() {
 
         </div>}
 
-        {pressed == 4 &&
+        {pressed == 4 &&<div className='Resource'> 
         <div className='title'>
           <h1>Resources List</h1>
-        </div>}
-
-        {pressed == 4 &&
+        </div>
         <div className='taskList'>
           
          {/* Put tasks with different appids in separate rows */}
 
           
+         <div className="grid">
 
-              {resourcesList.sort((a, b) => (a.resource_id > b.resource_id) ? 1 : -1).map((res, i) => (
+              {resourcesList.sort((a, b) => (parseInt(a.resource_id) > parseInt(b.resource_id)) ? 1 : -1).map((res, i) => (
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
                     let ResourceID = e.currentTarget.querySelector(".number").innerHTML;
-                    const updatedResoucesList = resourcesList.map((resource, idx) => {
-                        return resource;
-                    });
-                    console.log(ResourceID)
-                    updatedResoucesList.filter((t) => t.resource_id !== ResourceID);
-                    console.log(updatedResoucesList);
+                    let updatedResoucesList = [];
+                    for (let i = 0; i < resourcesList.length; i++) {
+                      if (resourcesList[i].resource_id !== ResourceID) {
+                        updatedResoucesList.push(resourcesList[i]);
+                      }
+                    }
                     // Update the state with the new array
                     setResourcesList(updatedResoucesList);
                   }}>
@@ -1829,6 +1878,9 @@ function MainPage() {
                   </div>
                     ))}
 
+          </div>
+
+        </div>
         </div>}
 
 
