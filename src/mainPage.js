@@ -45,7 +45,10 @@ let labelListAlarm = [
   "Event Mask",
   "Autostart",
 ];
-
+let labelListResource = [
+  "Resource ID",
+  "Resource Property"
+];
 // create a list of the given labels
 
 
@@ -80,6 +83,9 @@ function MainPage() {
   const [eventMask, setEventMask] = useState(-1);
   const [autostart, setAutostart] = useState(-1);
   const [alarmsList, setAlarmsList] = useState([[], [], [], [], [], []]);
+  const [resourceID, setResourceID] = useState(-1);
+  const [resourceProperty, setResourceProperty] = useState("STANDARD");
+  const [resourcesList, setResourcesList] = useState([]);
 
 
   let variables = [appID, taskID, priority, handleName, taskState, schedule, version, maxActivation, resourcesUsed];
@@ -92,6 +98,8 @@ function MainPage() {
   let optionsCounter = [[], [], [], ["Software", "Hardware"]];
   let optionsAlarm = [[], [], [], [], [], [], [], ["ACTION_ACTIVATETASK", "ACTION_SETEVENT", "ACTION_ALARMCALLBACK"], [], [], []];
   let variablesAlarm = [counterID, alarmID, maxValue, ticksPerBase, minimumCycle, start, cycle, alarmAction, taskID, eventMask, autostart];
+  let variablesResource = [resourceID, resourceProperty];
+  let optionsResource = [[], ["STANDARD", "LINKED", "INTERNAL"]];
 
 
 
@@ -1377,6 +1385,169 @@ function MainPage() {
       </div>
       }
 
+
+    {pressed === 4 &&
+      <div className='title'>
+        <h1>Resource Attributes</h1>
+        </div>
+      }
+
+      {pressed === 4 && labelListResource.map((label, index) => (
+        <div className="form__group field" key={index}>
+          { [0].includes(index) && 
+          <input
+            type="input"
+            className="form__field"
+            placeholder={label}
+            name={label}
+            id={label}
+            onChange={(e) => {
+              // use set function to update the state
+              switch (index) {
+                case 0:
+                  setResourceID(e.target.value);
+                  break;
+                case 1:
+                  setResourceProperty(e.target.value);
+                  break;
+                default:
+                  break;
+              }
+            }}
+            required
+          />}
+
+        { ![0].includes(index) && 
+          <select
+            type="input"
+            className="form__field"
+            placeholder={label}
+            name={label}
+            id={label}
+            onChange={(e) => {
+              // use set function to update the state
+              switch (index) {
+                case 0:
+                  setResourceID(e.target.value);
+                  break;
+                case 1:
+                  setResourceProperty(e.target.value);
+                  break;
+                default:
+                  break;
+              }
+            }}
+            required
+          >
+            {optionsResource[index].map((option, index) => (
+              <option style={{   backgroundColor: '#282c34' }}value={option} key={index}>
+                {option}
+              </option>
+            ))}
+            </select>}
+          
+          <label htmlFor={label} className="form__label">
+            {label}
+          </label>
+        </div>
+      ))}
+
+    {pressed ===
+      4 && <div className="newbutton">
+          <button id="btnRes" onClick={() => {
+            const btn = document.querySelector("#btnRes");
+            const btnText = document.querySelector("#btnResText");
+
+            // check if all the fields are filled
+            for (let i = 0; i < variablesResource.length; i++) {
+              if (variablesResource[i] === -1 || variablesResource[i] === "") {
+                console.log("Field not filled is " + labelListResource[i]);
+                btnText.innerHTML = "Fill all the fields!";
+                let old = btnText.style.color;
+                btnText.style.color = "black";
+                btn.classList.add("reject");
+                setTimeout(function () {
+                  btn.classList.remove("reject");
+                  btnText.innerHTML = "Add";
+                  btnText.style.color = old;
+                }, 3000);
+                return;
+              }
+            }
+
+            
+            // check that coreid, taskid, priority, and max activation are integers
+            if (!Number.isInteger(parseInt(resourceID)) ) {
+              btnText.innerHTML = "Core ID must be an integer!";
+              let old = btnText.style.color;
+              btnText.style.color = "black";
+              btn.classList.add("reject");
+              setTimeout(function () {
+                btn.classList.remove("reject");
+                btnText.innerHTML = "Add";
+                btnText.style.color = old;
+              }, 3000);
+              return;
+            }
+
+
+            // check if the counterID is unique
+            for (let i = 0; i < resourcesList.length; i++) {
+              for (let j = 0; j < resourcesList[i].length; j++) {
+                if (resourcesList[i][j].resource_id === resourceID) {
+                  btnText.innerHTML = "Resource ID already exists!";
+                  let old = btnText.style.color;
+                  btnText.style.color = "black";
+                  btn.classList.add("reject");
+                  setTimeout(function () {
+                    btn.classList.remove("reject");
+                    btnText.innerHTML = "Add";
+                    btnText.style.color = old;
+                  }, 3000);
+                  return;
+                }
+              }
+            }
+            
+
+            let Resource = {
+              resource_id: resourceID,
+              resource_property: resourceProperty,
+            };
+
+
+            let temp = resourcesList;
+            temp.push(Resource);
+            setResourcesList(temp);
+            
+            setResourceID(-1);
+            setResourceProperty("");
+
+            // remove the value from the input fields
+            for (let i = 0; i < variablesResource.length; i++) {
+              document.querySelectorAll(".form__field")[i].value = "";
+            }
+            
+
+            btnText.innerHTML = "Resource Added!";
+            btn.classList.add("active");
+            setTimeout(function () {
+              btn.classList.remove("active");
+              btnText.innerHTML = "Add";
+            }, 3000);
+          }
+          }>
+              <p id="btnResText">Add</p>
+              <div className="check-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                      <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8" />        
+                  </svg>
+              </div>
+          </button>
+      </div>
+      }
+
+
       </div>
 
       <div className='content'>
@@ -1558,7 +1729,7 @@ function MainPage() {
 
         {pressed == 3 &&
         <div className='title'>
-          <h1>Counters List</h1>
+          <h1>Alarms List</h1>
         </div>}
 
         {pressed == 3 &&
@@ -1612,6 +1783,51 @@ function MainPage() {
               
             </div>
           ))}
+
+        </div>}
+
+        {pressed == 4 &&
+        <div className='title'>
+          <h1>Resources List</h1>
+        </div>}
+
+        {pressed == 4 &&
+        <div className='taskList'>
+          
+         {/* Put tasks with different appids in separate rows */}
+
+          
+
+              {resourcesList.sort((a, b) => (a.resource_id > b.resource_id) ? 1 : -1).map((res, i) => (
+                  <div className='containerbox' key={i} onContextMenu={(e) => {
+                    e.preventDefault();
+
+                    let ResourceID = e.currentTarget.querySelector(".number").innerHTML;
+                    const updatedResoucesList = resourcesList.map((resource, idx) => {
+                        return resource;
+                    });
+                    console.log(ResourceID)
+                    updatedResoucesList.filter((t) => t.resource_id !== ResourceID);
+                    console.log(updatedResoucesList);
+                    // Update the state with the new array
+                    setResourcesList(updatedResoucesList);
+                  }}>
+                    {/* make the text white */}
+                      <div className='task'>
+
+                        
+                        <p className='text'>{res.resource_property}</p>
+
+                        <div className="taskProperties">
+                        <div className="circle">
+                            <span className="number">{res.resource_id}</span>
+                          </div>
+                        </div>
+
+                      </div>
+    
+                  </div>
+                    ))}
 
         </div>}
 

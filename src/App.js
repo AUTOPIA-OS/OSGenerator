@@ -14,9 +14,7 @@ function App() {
 
   return (
         <BrowserRouter>
-
           <Routes>
-            {/* protected routes */}
 
             <Route path="/" element={<MainPage />} />
 
