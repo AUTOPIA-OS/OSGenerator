@@ -1340,7 +1340,7 @@ function MainPage() {
             let found = false;
             for (let i = 0; i < countersList.length; i++) {
                 for (let j = 0; j < countersList[i].length; j++) {
-                    if (countersList[i][j].counter_id === counterID) {
+                    if (countersList[i][j].counter_id === parseInt(counterID)) {
                         found = true;
                         break;
                     }
@@ -1405,7 +1405,7 @@ function MainPage() {
             let appID2 = -1;
             for (let i = 0; i < temp.length; i++) {
                 for (let j = 0; j < temp[i].length; j++) {
-                    if (temp[i][j].counter_id === counterID) {
+                    if (temp[i][j].counter_id === parseInt(counterID)) {
                     temp[i][j].Alarms.push(Alarm);
                     appID2 = i;
                     break;
@@ -1415,11 +1415,13 @@ function MainPage() {
             setCountersList(temp);
 
             let Alarm2 = {
-              AlarmID: alarmID,
-              CounterID: counterID,
+              AlarmID: parseInt(alarmID),
+              CounterID: parseInt(counterID),
             };
 
             let temp2 = alarmsList;
+            console.log(temp2);
+            console.log(appID2);
             temp2[appID2].push(Alarm2);
             setAlarmsList(temp2);
             
@@ -1648,7 +1650,7 @@ function MainPage() {
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
-                    let taskID = e.currentTarget.querySelector(".number").innerHTML;
+                    let taskID = parseInt(e.currentTarget.querySelector(".number").innerHTML);
                     const updatedTasksList = tasksList.map((taskArr, idx) => {
                       if (idx === index) {
                         return taskArr.filter((t) => t.TaskID !== taskID);
@@ -1710,7 +1712,7 @@ function MainPage() {
 
                     console.log(e.currentTarget);
 
-                    let priority = e.currentTarget.querySelector(".rotate-text").innerHTML;
+                    let priority = parseInt(e.currentTarget.querySelector(".rotate-text").innerHTML);
                     const updatedTasksList = interruptsList.map((taskArr, idx) => {
                       if (idx === index) {
                         return taskArr.filter((t) => t.priority !== priority);
@@ -1766,7 +1768,7 @@ function MainPage() {
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
-                    let counterID = e.currentTarget.querySelector(".number").innerHTML;
+                    let counterID = parseInt(e.currentTarget.querySelector(".number").innerHTML);
                     const updatedTasksList = countersList.map((taskArr, idx) => {
                       if (idx === index) {
                         return taskArr.filter((t) => t.counter_id !== counterID);
@@ -1822,7 +1824,7 @@ function MainPage() {
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
-                    let AlarmID = e.currentTarget.querySelector(".number").innerHTML;
+                    let AlarmID = parseInt(e.currentTarget.querySelector(".number").innerHTML);
                     const updatedTasksList = alarmsList.map((taskArr, idx) => {
                       if (idx === index) {
                         return taskArr.filter((t) => t.AlarmID !== AlarmID);
@@ -1875,7 +1877,7 @@ function MainPage() {
                   <div className='containerbox' key={i} onContextMenu={(e) => {
                     e.preventDefault();
 
-                    let ResourceID = e.currentTarget.querySelector(".number").innerHTML;
+                    let ResourceID = parseInt(e.currentTarget.querySelector(".number").innerHTML);
                     let updatedResoucesList = [];
                     for (let i = 0; i < resourcesList.length; i++) {
                       if (resourcesList[i].resource_id !== ResourceID) {
